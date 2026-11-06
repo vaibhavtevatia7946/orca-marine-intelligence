@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
-import * as maplibregl from 'maplibre-gl';
+import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import LayerPanel from './LayerPanel';
 
@@ -25,26 +25,13 @@ const BASEMAP_STYLES = {
 // Full India view bounds: includes Aksai Chin (north), Lakshadweep (west/south), Andaman (east/south)
 const INDIA_BOUNDS = [[67.0, 5.5], [97.5, 37.5]];
 
-export default function MapView({ layers, centerCoords, zoom }) {
+export default function MapView({ layers }) {
   const mapContainer = useRef(null);
   const mapRef = useRef(null);
   const [visibleLayers, setVisibleLayers] = useState(new Set());
   const [activeBasemap, setActiveBasemap] = useState('voyager');
   const syncLayersRef = useRef(null);
   const indiaLayersAdded = useRef(false);
-
-  // Smooth camera transitions when location is selected
-  useEffect(() => {
-    if (mapRef.current && centerCoords && centerCoords.length === 2) {
-      mapRef.current.flyTo({
-        center: centerCoords,
-        zoom: zoom || 6.5,
-        speed: 1.2,
-        curve: 1.4,
-        essential: true
-      });
-    }
-  }, [centerCoords, zoom]);
 
   // Add official India boundary & state layers on the map
   const addIndiaOverlay = useCallback((map) => {
@@ -236,8 +223,8 @@ export default function MapView({ layers, centerCoords, zoom }) {
     if (mapRef.current) return;
     if (!mapContainer.current) return;
 
-    if (!maplibregl || !maplibregl.Map) {
-      console.warn("MapLibre GL not loaded.");
+    if (typeof maplibregl.supported === 'function' && !maplibregl.supported()) {
+      console.warn("MapLibre WebGL not supported in this client environment.");
       return;
     }
 
@@ -247,11 +234,11 @@ export default function MapView({ layers, centerCoords, zoom }) {
         container: mapContainer.current,
         style: BASEMAP_STYLES.voyager.url,
         center: [78.9629, 20.5937],
-        zoom: 3.5,
+        zoom: 4.2,
+        maxBounds: [[60, 0], [100, 40]],
         attributionControl: false
       });
 
-      map.setProjection({ type: 'globe' }); // Globe projection for modern maplibre
       map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'bottom-right');
       map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
 

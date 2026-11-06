@@ -14,30 +14,25 @@ export default function ChatSidebar({
   onOpenQuiz
 }) {
   const [inputText, setInputText] = useState('');
-  const messagesContainerRef = useRef(null);
+  const endOfMessagesRef = useRef(null);
 
-  // Official ISRO Core Problem Scenarios & Mission
+  // The Official ISRO SIH26176 Core Problem Scenarios & Mission
   const isroScenarios = [
-    { label: "Motto & What ORCA Does", query: "What is the motto of this project and what can you do for the people using this project?" },
-    { label: "Lakshadweep Tuna Grounds", query: "Show Potential Fishing Zones, weather, and safe routes near Lakshadweep Islands" },
-    { label: "Andaman & Nicobar EEZ", query: "Show Potential Fishing Zones, cyclone alerts, and maritime conditions near Port Blair, Andaman & Nicobar Islands" },
-    { label: "Nearest PFZ Today", query: "Where is the nearest Potential Fishing Zone today?" },
-    { label: "Safe Tomorrow Morning?", query: "Is it safe to venture into the sea tomorrow morning?" },
-    { label: "Tides & Sea Conditions", query: "What are the tide, weather, and sea conditions near my fishing location?" },
-    { label: "Cyclone & Lightning Alerts", query: "Are there any lightning or cyclone alerts in my area?" },
-    { label: "Chlorophyll & SST Fronts", query: "Which regions show high chlorophyll concentration and favourable sea surface temperature?" },
-    { label: "Safe Vessel Route", query: "What is the safest route for a fishing vessel considering weather and sea-state conditions?" },
-    { label: "Fish Productivity Decline", query: "Why has fish productivity declined in a particular coastal region?" },
-    { label: "Avoid Restricted & MPAs", query: "Which fishing zones should be avoided due to hazardous marine conditions or geofencing restrictions?" }
+    { label: "🌟 Motto & What ORCA Does", query: "What is the motto of this project and what can you do for the people using this project?" },
+    { label: "🏝️ Lakshadweep Tuna Grounds", query: "Show Potential Fishing Zones, weather, and safe routes near Lakshadweep Islands" },
+    { label: "🌴 Andaman & Nicobar EEZ", query: "Show Potential Fishing Zones, cyclone alerts, and maritime conditions near Port Blair, Andaman & Nicobar Islands" },
+    { label: "🐟 Nearest PFZ Today", query: "Where is the nearest Potential Fishing Zone today?" },
+    { label: "⛵ Safe Tomorrow Morning?", query: "Is it safe to venture into the sea tomorrow morning?" },
+    { label: "🌊 Tides & Sea Conditions", query: "What are the tide, weather, and sea conditions near my fishing location?" },
+    { label: "⚡ Cyclone & Lightning Alerts", query: "Are there any lightning or cyclone alerts in my area?" },
+    { label: "🌿 Chlorophyll & SST Fronts", query: "Which regions show high chlorophyll concentration and favourable sea surface temperature?" },
+    { label: "🗺️ Safe Vessel Route", query: "What is the safest route for a fishing vessel considering weather and sea-state conditions?" },
+    { label: "📉 Fish Productivity Decline", query: "Why has fish productivity declined in a particular coastal region?" },
+    { label: "🚫 Avoid Restricted & MPAs", query: "Which fishing zones should be avoided due to hazardous marine conditions or geofencing restrictions?" }
   ];
 
   const scrollToBottom = () => {
-    if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTo({
-        top: messagesContainerRef.current.scrollHeight,
-        behavior: 'smooth'
-      });
-    }
+    endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -61,7 +56,7 @@ export default function ChatSidebar({
     <div className="sidebar">
       <div className="sidebar-header">
         <div className="logo-area">
-          <div className="title">ORCA Console</div>
+          <div className="title">🐋 ORCA</div>
           <div className="subtitle">ISRO Multi-Agent Marine Intelligence</div>
         </div>
         <div className="header-controls">
@@ -72,16 +67,16 @@ export default function ChatSidebar({
             title="Select Coastal Language"
           >
             <option value="en">English</option>
-            <option value="hi">Hindi</option>
-            <option value="gu">Gujarati</option>
-            <option value="mr">Marathi</option>
-            <option value="gom">Konkani</option>
-            <option value="kn">Kannada</option>
-            <option value="ml">Malayalam</option>
-            <option value="ta">Tamil</option>
-            <option value="te">Telugu</option>
-            <option value="or">Odia</option>
-            <option value="bn">Bengali</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="gu">ગુજરાતી (Gujarati)</option>
+            <option value="mr">मराठी (Marathi)</option>
+            <option value="gom">कोंकणी (Konkani)</option>
+            <option value="kn">ಕನ್ನಡ (Kannada)</option>
+            <option value="ml">മലയാളം (Malayalam)</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+            <option value="te">తెలుగు (Telugu)</option>
+            <option value="or">ଓଡ଼ିଆ (Odia)</option>
+            <option value="bn">বাংলা (Bengali)</option>
           </select>
           <select
             className="vessel-select"
@@ -89,9 +84,9 @@ export default function ChatSidebar({
             onChange={(e) => setVesselType && setVesselType(e.target.value)}
             title="Select Craft Type"
           >
-            <option value="motorized_boat">Motorized Boat</option>
-            <option value="traditional_vallam">Traditional Craft</option>
-            <option value="mechanized_trawler">Deep-Sea Trawler</option>
+            <option value="motorized_boat">🚤 Motorized Boat</option>
+            <option value="traditional_vallam">🛶 Traditional Craft</option>
+            <option value="mechanized_trawler">🚢 Deep-Sea Trawler</option>
           </select>
         </div>
       </div>
@@ -104,7 +99,7 @@ export default function ChatSidebar({
           onClick={onOpenTerritoryMap}
           title="Interactive Map of India, Lakshadweep (SW) & Andaman & Nicobar (SE)"
         >
-          India &amp; Islands
+          🗺️ India &amp; Islands
         </button>
         <button
           type="button"
@@ -112,11 +107,11 @@ export default function ChatSidebar({
           onClick={onOpenQuiz}
           title="Marine Knowledge &amp; Regulatory Practice Assessment"
         >
-          Practice Quiz
+          📚 Practice Quiz
         </button>
       </div>
 
-      <div className="chat-messages" ref={messagesContainerRef}>
+      <div className="chat-messages">
         {messages.map((msg, idx) => (
           <ChatMessage key={idx} message={msg} language={language} />
         ))}
@@ -127,11 +122,12 @@ export default function ChatSidebar({
             </div>
           </div>
         )}
+        <div ref={endOfMessagesRef} />
       </div>
 
-      {/* ISRO Operational Scenario Quick Prompts */}
+      {/* ISRO SIH26176 8 Scenario Quick Prompts */}
       <div className="quick-prompts-container">
-        <div className="quick-prompts-label">ISRO Operational Scenarios:</div>
+        <div className="quick-prompts-label">🎯 ISRO Problem Scenarios (SIH26176):</div>
         <div className="quick-prompts">
           {isroScenarios.map((item, idx) => (
             <button
@@ -151,7 +147,7 @@ export default function ChatSidebar({
         <div className="input-container">
           <textarea
             className="chat-input"
-            placeholder="Ask about fishing, tides, weather, or routes..."
+            placeholder="Ask about fishing, tides, weather, or routes in your language..."
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             onKeyDown={handleKeyDown}
