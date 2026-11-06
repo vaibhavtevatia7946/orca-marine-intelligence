@@ -479,6 +479,16 @@ export default function MapView({ layers }) {
     <div className="map-container">
       <div ref={mapContainer} className="map-wrapper" />
 
+      {/* Holographic Maritime Radar HUD */}
+      <div className="naval-radar-hud" title="Swarm Maritime Radar Sweep">
+        <div className="radar-sweep-beam" />
+        <div className="radar-ring r1" />
+        <div className="radar-ring r2" />
+        <div className="radar-blip b1" />
+        <div className="radar-blip b2" />
+        <span className="radar-badge-text">SCAN 360°</span>
+      </div>
+
       {/* Basemap Style Switcher Control */}
       <div className="basemap-selector">
         {Object.entries(BASEMAP_STYLES).map(([key, item]) => (

@@ -30,6 +30,26 @@
           navigator.serviceWorker.register('/sw.js').catch(() => {});
         });
       }
+
+      // Inject Holographic Maritime Radar HUD overlay
+      const checkMap = setInterval(() => {
+        const mapEl = document.querySelector('.map-container');
+        if (mapEl && !document.querySelector('.naval-radar-hud')) {
+          const radar = document.createElement('div');
+          radar.className = 'naval-radar-hud';
+          radar.title = 'ISRO / ORCA Swarm Maritime Radar Sweep';
+          radar.innerHTML = `
+            <div class="radar-sweep-beam"></div>
+            <div class="radar-ring r1"></div>
+            <div class="radar-ring r2"></div>
+            <div class="radar-blip b1"></div>
+            <div class="radar-blip b2"></div>
+            <span class="radar-badge-text">SCAN 360°</span>
+          `;
+          mapEl.appendChild(radar);
+          clearInterval(checkMap);
+        }
+      }, 300);
     </script>
   </body>
 </html>
