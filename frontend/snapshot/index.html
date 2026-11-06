@@ -12,26 +12,99 @@
     <link href="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script type="module" crossorigin src="/assets/index-BQx_GqXk.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-D1bWWPQS.css">
+    <style>
+      @keyframes loader-whale-float {
+        0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5)); }
+        50% { transform: translateY(-10px) scale(1.06); filter: drop-shadow(0 0 38px rgba(0, 212, 255, 0.95)) hue-rotate(15deg); }
+      }
+      @keyframes loader-progress {
+        0% { width: 0%; }
+        45% { width: 65%; }
+        80% { width: 90%; }
+        100% { width: 100%; }
+      }
+      .loader-sonar-ring {
+        position: absolute;
+        border-radius: 50%;
+        border: 1.5px solid rgba(0, 212, 255, 0.5);
+        animation: sonar-expand 2.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+        pointer-events: none;
+      }
+      .loader-sonar-ring.r1 { animation-delay: 0s; }
+      .loader-sonar-ring.r2 { animation-delay: 0.7s; }
+      .loader-sonar-ring.r3 { animation-delay: 1.4s; }
+
+      @keyframes sonar-expand {
+        0% { width: 40px; height: 40px; opacity: 1; transform: scale(0.6); }
+        100% { width: 190px; height: 190px; opacity: 0; transform: scale(1.4); }
+      }
+    </style>
   </head>
   <body>
     <div id="root">
-      <div id="initial-loader" style="height:100vh;width:100vw;background:#0a1628;color:#00d4ff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Inter',-apple-system,sans-serif;">
-        <div style="font-size:3.5rem;margin-bottom:1rem;animation:pulse 1.8s infinite ease-in-out;">🐋</div>
-        <div style="font-size:1.25rem;font-weight:700;letter-spacing:0.05em;color:#ffffff;">ORCA Marine Intelligence</div>
-        <div style="font-size:0.85rem;color:#94a3b8;margin-top:0.5rem;letter-spacing:0.03em;">ISRO SIH26176 · Loading ocean swarm telemetry...</div>
+      <!-- High-Tech Opening Cinematic Experience -->
+      <div id="initial-loader" style="position:fixed;inset:0;background:radial-gradient(ellipse at center,#0d203f 0%,#071326 60%,#030914 100%);color:#00d4ff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Inter',-apple-system,sans-serif;z-index:9999;overflow:hidden;">
+        <!-- Cyber grid matrix background -->
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,212,255,0.02) 3px,rgba(0,212,255,0.02) 6px);pointer-events:none;"></div>
+
+        <!-- Central Pulsing Sonar Whale -->
+        <div style="position:relative;width:150px;height:150px;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
+          <div class="loader-sonar-ring r1"></div>
+          <div class="loader-sonar-ring r2"></div>
+          <div class="loader-sonar-ring r3"></div>
+          <div style="font-size:4.2rem;z-index:2;animation:loader-whale-float 2.5s ease-in-out infinite;user-select:none;">🐋</div>
+        </div>
+
+        <!-- Title & Subtitle -->
+        <div style="font-size:1.6rem;font-weight:800;letter-spacing:0.08em;color:#ffffff;text-shadow:0 0 25px rgba(0,212,255,0.6);margin-bottom:0.35rem;">
+          ORCA <span style="color:#00d4ff;font-weight:400;">MARINE</span>
+        </div>
+        <div style="font-size:0.75rem;letter-spacing:0.25em;text-transform:uppercase;color:#00d4ff;font-weight:700;margin-bottom:1.8rem;opacity:0.9;">
+          ISRO SIH26176 · SWARM DECISION MATRIX
+        </div>
+
+        <!-- Glowing Cyber Progress Bar -->
+        <div style="width:260px;height:6px;background:rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;position:relative;box-shadow:0 0 15px rgba(0,212,255,0.25);margin-bottom:1.1rem;">
+          <div style="height:100%;width:0%;background:linear-gradient(90deg,#00d4ff,#0066ff);border-radius:10px;animation:loader-progress 2.2s cubic-bezier(0.16,1,0.3,1) infinite;box-shadow:0 0 12px #00d4ff;"></div>
+        </div>
+
+        <!-- Dynamic Telemetry Status Feed -->
+        <div id="loader-status-text" style="font-size:0.76rem;color:#94a3b8;letter-spacing:0.04em;font-family:monospace;display:flex;align-items:center;gap:0.45rem;">
+          <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#00d4ff;box-shadow:0 0 8px #00d4ff;animation:pulse 1s infinite;"></span>
+          <span id="loader-status-msg">Establishing satellite telemetry uplink...</span>
+        </div>
       </div>
     </div>
+
     <script>
+      // Service worker registration
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/sw.js').catch(() => {});
         });
       }
 
-      // Inject Holographic Maritime Radar HUD overlay
+      // Rotate high-tech telemetry opening messages
+      const loaderMsgs = [
+        'Establishing Oceansat-3 satellite uplink...',
+        'Decoding INCOIS marine & wave harmonics...',
+        'Synchronizing IMBL & MPA geofencing rules...',
+        'Calibrating 8 core scenario agents...',
+        'Launching Swarm Mission Control...'
+      ];
+      let msgIdx = 0;
+      setInterval(() => {
+        const el = document.getElementById('loader-status-msg');
+        if (el) {
+          msgIdx = (msgIdx + 1) % loaderMsgs.length;
+          el.textContent = loaderMsgs[msgIdx];
+        }
+      }, 550);
+
+      // Inject Holographic Maritime Radar HUD overlay onto Map
       const checkMap = setInterval(() => {
         const mapEl = document.querySelector('.map-container');
         if (mapEl && !document.querySelector('.naval-radar-hud')) {
