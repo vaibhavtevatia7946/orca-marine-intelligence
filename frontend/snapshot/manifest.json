@@ -1,0 +1,18 @@
+{
+  "name": "ORCA Marine Intelligence",
+  "short_name": "ORCA Marine",
+  "description": "Autonomous AI Marine Intelligence & Coastal Navigation Observatory",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a1628",
+  "theme_color": "#0a1628",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

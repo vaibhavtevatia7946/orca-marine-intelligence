@@ -27,6 +27,7 @@ export default function App() {
   const [layers, setLayers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [language, setLanguage] = useState('en');
+  const [mobileTab, setMobileTab] = useState('map');
 
   const dismissIntro = useCallback(() => {
     setShowIntro(false);
@@ -117,7 +118,7 @@ export default function App() {
     : 'alert-normal';
 
   return (
-    <div className="app-container">
+    <div className={`app-container mobile-show-${mobileTab}`}>
       {/* Aesthetic Hero Modal Overlay (dismissible on click) */}
       {showIntro && (
         <div className="splash-screen" onClick={dismissIntro}>
@@ -226,6 +227,27 @@ export default function App() {
         isOpen={isQuizOpen}
         onClose={() => setIsQuizOpen(false)}
       />
+
+      {/* Mobile Segmented Toggle (Only visible on screens <= 768px) */}
+      <div className="mobile-view-toggle">
+        <button
+          type="button"
+          className={`mobile-toggle-btn ${mobileTab === 'map' ? 'active' : ''}`}
+          onClick={() => {
+            setMobileTab('map');
+            setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
+          }}
+        >
+          🗺️ Ocean Map
+        </button>
+        <button
+          type="button"
+          className={`mobile-toggle-btn ${mobileTab === 'chat' ? 'active' : ''}`}
+          onClick={() => setMobileTab('chat')}
+        >
+          💬 Swarm Chat
+        </button>
+      </div>
     </div>
   );
 }

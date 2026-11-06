@@ -1,21 +1,43 @@
-# 🐋 ORCA — Marine Ecosystem Reasoning with Collaborative Agents
+# 🐋 ORCA Marine Intelligence
 
-> **ISRO Marine Intelligence Platform** — Multi-Agent Marine Intelligence Platform
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel%20Production-00d4ff?style=for-the-badge&logo=vercel)](https://orca-marine-intelligence-two.vercel.app)
+[![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+[![Frontend](https://img.shields.io/badge/Frontend-React%20%7C%20Vite%20%7C%20MapLibre-61DAFB?style=for-the-badge&logo=react)](https://orca-marine-intelligence-two.vercel.app)
+[![Backend](https://img.shields.io/badge/Backend-FastAPI%20%7C%20LangGraph-009688?style=for-the-badge&logo=fastapi)](https://github.com/vaibhavtevatia7946/orca-marine-intelligence)
+[![PWA](https://img.shields.io/badge/PWA-Installable%20%26%20Offline%20Ready-5A0FC8?style=for-the-badge&logo=pwa)](https://orca-marine-intelligence-two.vercel.app)
 
-A full-stack prototype that allows users to query oceanographic conditions, safety alerts, safe routing, and Potential Fishing Zones (PFZs) using natural language, returning structured explanations and interactive map overlays.
+> **Autonomous AI Marine Intelligence & Coastal Navigation Observatory**  
+> Developed & maintained by **[Vaibhav Tevatia](https://github.com/vaibhavtevatia7946)**
 
-## Architecture
+ORCA is an agentic AI maritime decision-support platform designed for coastal fishermen, maritime vessels, and ocean researchers across the Indian Ocean coastline. It correlates real-time satellite Earth Observation, ocean forecasts, tide harmonics, and international maritime boundaries into natural-language safety advisories and interactive GIS maps.
+
+---
+
+## 🌟 Key Features
+
+* **🗺️ Interactive Maritime GIS Map:** Powered by MapLibre GL with Carto Voyager basemap switcher, displaying EEZ, Marine Protected Areas (MPAs), and International Maritime Boundary Lines (IMBL).
+* **🎣 Potential Fishing Zones (PFZ):** Geospatial telemetry showing optimal chlorophyll and Sea Surface Temperature (SST) zones.
+* **⚠️ Coastal Hazard & Cyclone Tracking:** High wave alerts, wind velocity tracking, barometric pressure anomaly detection, and safe routing corridors.
+* **🗣️ Multilingual & Hands-Free Voice:** Speech synthesis and voice input in 11 Indian languages (Hindi, Tamil, Telugu, Malayalam, Gujarati, Bengali, Marathi, etc.).
+* **📱 Mobile-First PWA (Progressive Web App):** Offline caching via Service Workers and installable on Android, iOS, and Desktop.
+* **🤖 Swarm AI Decision Matrix:** Multi-agent routing powered by LangGraph, Groq LPU, and Google Gemini with safety threshold overrides.
+* **📚 Maritime Knowledge & Quiz Mode:** Comprehensive quiz and knowledge testing module covering navigation rules, safety protocols, and Indian maritime law.
+
+---
+
+## 🏗️ Architecture
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│                        React Frontend                            │
+│                   React + Vite PWA Frontend                      │
 │  ┌────────────┐  ┌─────────────────────────────────────────────┐ │
 │  │ Chat Panel  │  │           MapLibre GL Map                   │ │
 │  │ Voice I/O   │  │  • PFZ zones (green)                       │ │
 │  │ Language     │  │  • Hazard zones (red)                      │ │
 │  │ Agent Trace  │  │  • Safe routes (blue)                      │ │
-│  │             │  │  • SST heatmap (orange)                     │ │
-│  └──────┬──────┘  │  • IMBL boundary (purple)                   │ │
+│  │ PWA Offline  │  │  • SST heatmap (orange)                     │ │
+│  │             │  │  • IMBL boundary (purple)                   │ │
+│  └──────┬──────┘  │  • Mobile Responsive Tabs                   │ │
 │         │         └─────────────────────────────────────────────┘ │
 └─────────┼────────────────────────────────────────────────────────┘
           │ POST /api/chat
@@ -23,141 +45,66 @@ A full-stack prototype that allows users to query oceanographic conditions, safe
 ┌──────────────────────────────────────────────────────────────────┐
 │                    FastAPI Backend                                │
 │  ┌──────────────┐  ┌──────────────────────────────────┐          │
-│  │ Translation   │  │ LangGraph Orchestrator            │         │
+│  │ Translation   │  │ LangGraph Multi-Agent Swarm       │          │
 │  │ Middleware     │→ │  ┌─────────┐ ┌─────────────────┐ │         │
-│  │ (IndicTrans2)  │  │  │ Router  │→│ Tool Dispatcher  │ │         │
+│  │ (Indic/Edge) │  │  │ Router  │→│ Tool Dispatcher  │ │         │
 │  └──────────────┘  │  └─────────┘ └────────┬────────┘ │         │
 │                    │               ┌───────┴────────┐  │         │
-│                    │    ┌──────────┤  Tool Nodes     │  │         │
+│                    │    ┌──────────┤  Specialists    │  │         │
 │                    │    ▼          ▼         ▼       ▼  │         │
 │                    │  Data     Safety     PFZ     Route │         │
 │                    │  Agent    Agent     Agent    Agent  │         │
 │                    └────────────────────────────────────┘         │
 │                    ┌──────────────────────────────────┐          │
-│                    │     Mock GeoJSON Data Layer       │          │
-│                    │  SST · Chlorophyll · Weather ·    │          │
-│                    │  IMBL · PFZ Zones                 │          │
+│                    │     Telemetry Data Layer         │          │
+│                    │  SST · Chlorophyll · Open-Meteo · │          │
+│                    │  INCOIS Bulletins · Users SQLite │          │
 │                    └──────────────────────────────────┘          │
 └──────────────────────────────────────────────────────────────────┘
 ```
 
-## Quick Start
+---
 
-### Prerequisites
-- Python 3.11+
-- Node.js 18+
+## 🚀 Quick Start
 
-### Backend
-
+### 1. Clone the Repository
 ```bash
-cd backend
-pip install -r requirements.txt
-# The default .env has MOCK_MODE=true — no API key needed
-python -m uvicorn app:app --reload --port 8000
+git clone https://github.com/vaibhavtevatia7946/orca-marine-intelligence.git
+cd orca-marine-intelligence
 ```
 
-### Frontend
-
+### 2. Frontend Setup
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-Open **http://localhost:5173** — the map will center on the Tamil Nadu coast.
-
-### Try These Queries
-
-| Query | What Happens |
-|-------|-------------|
-| "Show me weather near Chennai" | SST heatmap + weather zones + safety assessment |
-| "Is it safe to fish near Rameswaram?" | IMBL boundary + hazard zones + risk score |
-| "Fishing zones near Kanyakumari" | PFZ polygons with confidence scores |
-| "Route from Chennai to Kanyakumari" | Safe route polyline avoiding hazards |
-
-### Enabling LLM Mode
-
-To use the real LangGraph agent with Gemini:
-
+### 3. Backend Setup
 ```bash
-# In backend/.env
-MOCK_MODE=false
-GOOGLE_API_KEY=your-gemini-api-key
+cd backend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app:app --reload --port 8000
 ```
 
-## Project Structure
+---
 
-```
-orca-marine/
-├── backend/
-│   ├── app.py                    # FastAPI entry + routes
-│   ├── models.py                 # Pydantic schemas
-│   ├── agents/
-│   │   ├── graph.py              # LangGraph StateGraph
-│   │   ├── tools.py              # 4 tool definitions
-│   │   ├── mock_orchestrator.py  # Rule-based fallback
-│   │   └── prompts.py            # System prompts
-│   ├── middleware/
-│   │   └── translation.py        # IndicTrans2 wrapper
-│   └── data/
-│       ├── mock_sst.py           # Sea Surface Temperature
-│       ├── mock_chlorophyll.py   # Chlorophyll-a
-│       ├── mock_weather.py       # Wind, waves, alerts
-│       ├── mock_imbl.py          # Maritime boundary
-│       └── mock_pfz.py           # Fishing zones
-└── frontend/
-    ├── src/
-    │   ├── App.jsx               # Root layout
-    │   ├── components/
-    │   │   ├── MapView.jsx       # MapLibre GL map
-    │   │   ├── ChatSidebar.jsx   # Chat interface
-    │   │   ├── AgentReasoning.jsx # Execution trace
-    │   │   ├── VoiceButton.jsx   # Voice input
-    │   │   └── LayerPanel.jsx    # Layer toggles
-    │   └── hooks/
-    │       └── useSpeech.js      # Web Speech API
-    └── package.json
+## ☁️ Deployment
+
+### Frontend (Vercel)
+Deploy with the Vercel CLI or link your GitHub repository directly to Vercel:
+```bash
+vercel --prod
 ```
 
-## API Contract
+### Backend (Render)
+Deploy the backend on Render with 1 click using the included `render.yaml`:
 
-```
-POST /api/chat
-Content-Type: application/json
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/vaibhavtevatia7946/orca-marine-intelligence)
 
-Request:
-{
-  "message": "string",
-  "location": "string",
-  "language": "en" | "hi" | "ta"
-}
+---
 
-Response:
-{
-  "text_response": "string",
-  "agent_reasoning": [
-    { "agent_name": "string", "action": "string", "result_summary": "string" }
-  ],
-  "geojson_layers": [
-    {
-      "id": "string",
-      "type": "fill" | "line" | "circle" | "heatmap",
-      "label": "string",
-      "data": { GeoJSON FeatureCollection },
-      "style": { "color": "#hex", "opacity": 0.6, "width": 2 }
-    }
-  ]
-}
-```
-
-## Voice & Language Support
-
-- **English** (en-IN)
-- **Hindi** (hi-IN) — हिन्दी
-- **Tamil** (ta-IN) — தமிழ்
-
-Voice input uses the Web Speech API (Chrome/Edge recommended). The IndicTrans2 middleware handles automatic language detection via Unicode character ranges.
-
-## License
-
-Built for ISRO Marine Intelligence Platform.
+## 📄 License
+This project is open source and available under the [MIT License](LICENSE).
