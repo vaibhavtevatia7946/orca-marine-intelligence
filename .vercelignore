@@ -1,4 +1,7 @@
 backend/
+Dockerfile
+docker-compose.yml
+render.yaml
 evals/
 diagrams/
 *.zip
