@@ -1,4 +1,4 @@
-# AGENTS.md — ORCA Marine Intelligencex
+# AGENTS.md — ORCA Marine Intelligence
 
 > General-purpose harness guide. **Not prescriptive** — use this to set up *your own* harness system. Each member (M-A..M-E) copies the pattern and modifies for their lane. Personal work logs are gitignored so you never conflict on `main`.
 
