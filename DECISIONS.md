@@ -1,4 +1,4 @@
-# Architectural & Design Decisionss
+# Architectural & Design Decisions
 
 ### 2026-09-24: ADR-0006 Force-Include Badge Tools with Fish Recommendations
 
